@@ -3,225 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>工业规格智库 | 大鹏水处理科技 - 数字化流体参数指挥中心</title>
+    <title>技术规格规格 | 大鹏水处理科技 - 工业流体数字指挥中心</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00D2FF;
             --secondary: #0054A6;
-            --deep-sea: #001220;
             --pure-white: #FFFFFF;
             --soft-blue: #F0F8FF;
-            --accent-cyan: #64FFDA;
             --text-dark: #1A2B3C;
             --text-light: #5D7285;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.6);
             --font-main: 'Noto Sans SC', sans-serif;
             --font-eng: 'Montserrat', sans-serif;
-            --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+            --ease: cubic-bezier(0.65, 0, 0.35, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
-        body { background: var(--deep-sea); color: var(--pure-white); font-family: var(--font-main); overflow-x: hidden; }
+        body { background: #fff; color: var(--text-dark); font-family: var(--font-main); overflow-x: hidden; }
 
-        .grid-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(0, 210, 255, 0.05) 1px, transparent 1px), 
-                              linear-gradient(90deg, rgba(0, 210, 255, 0.05) 1px, transparent 1px);
-            background-size: 80px 80px; z-index: -1;
+        .bg-decor { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: #F8FAFC; }
+        .grid-line {
+            position: absolute; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(0, 84, 166, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 84, 166, 0.03) 1px, transparent 1px);
+            background-size: 80px 80px;
         }
 
         #fluid-cursor {
             position: fixed; width: 25px; height: 25px; border: 1px solid var(--primary);
-            border-radius: 50%; pointer-events: none; z-index: 10000; transition: 0.2s;
+            border-radius: 50%; pointer-events: none; z-index: 10000; transition: 0.1s;
+            transform: translate(-50%, -50%); background: rgba(0, 210, 255, 0.1);
         }
 
         nav { 
-            position: fixed; top: 0; width: 100%; height: 80px; 
+            position: fixed; top: 0; width: 100%; height: 90px; 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 0 6%; z-index: 2000; background: rgba(0, 18, 32, 0.8); backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
+            padding: 0 6%; z-index: 2000; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid #E6F2FF;
         }
-        .logo { font-weight: 900; color: #fff; font-family: var(--font-eng); }
+        .logo { font-weight: 900; font-size: 24px; color: var(--secondary); font-family: var(--font-eng); }
 
-        /* Specs Command Center Header */
-        .specs-header { padding: 160px 8% 80px; text-align: center; border-bottom: 1px solid var(--glass-border); }
-        .specs-header h1 { font-size: 4rem; font-weight: 900; margin-bottom: 20px; letter-spacing: -2px; }
-        .specs-header p { font-size: 1.2rem; color: rgba(255,255,255,0.5); max-width: 800px; margin: 0 auto; }
+        /* Header 重构 */
+        .specs-header { padding: 180px 8% 80px; text-align: center; }
+        .specs-header h1 { font-size: 3.5rem; font-weight: 900; color: var(--secondary); margin-bottom: 25px; }
+        .specs-header p { font-size: 1.2rem; color: var(--text-light); max-width: 800px; margin: 0 auto; line-height: 1.8; }
 
-        /* Data Matrix Layout */
-        .specs-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 100px 8%; }
+        /* Matrix Grid：蓝白高密度设计 */
+        .matrix-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 0 8% 120px; }
         .matrix-card {
-            background: var(--glass); border: 1px solid var(--glass-border); border-radius: 40px;
-            padding: 60px 40px; transition: 0.5s; position: relative; overflow: hidden;
+            background: #fff; border-radius: 40px; padding: 55px 45px;
+            border: 1px solid #E6F2FF; box-shadow: 0 15px 45px rgba(0, 84, 166, 0.03);
+            transition: 0.5s var(--ease); position: relative; overflow: hidden;
         }
-        .matrix-card:hover { border-color: var(--primary); background: rgba(0, 210, 255, 0.05); }
-        
-        .matrix-card h2 { font-size: 24px; font-weight: 900; color: var(--primary); margin-bottom: 40px; display: flex; align-items: center; gap: 15px; }
-        .matrix-card h2 i { opacity: 0.5; }
+        .matrix-card:hover { transform: translateY(-15px); border-color: var(--primary); box-shadow: 0 40px 80px rgba(0, 84, 166, 0.08); }
+        .matrix-card::after { content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: var(--primary); opacity: 0.3; }
 
-        .spec-row { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
+        .matrix-card h2 { font-size: 24px; font-weight: 900; color: var(--secondary); margin-bottom: 35px; display: flex; align-items: center; gap: 15px; }
+        .matrix-card h2 i { color: var(--primary); }
+
+        .spec-row { display: flex; justify-content: space-between; padding: 22px 0; border-bottom: 1px dashed #E6F2FF; }
         .spec-row:last-child { border: none; }
-        .spec-label { font-size: 13px; color: rgba(255,255,255,0.4); font-weight: 700; text-transform: uppercase; }
-        .spec-value { font-family: var(--font-eng); font-weight: 900; font-size: 18px; color: var(--pure-white); }
+        .spec-label { font-size: 13px; font-weight: 800; color: var(--text-light); opacity: 0.6; }
+        .spec-value { font-family: var(--font-eng); font-weight: 900; font-size: 17px; color: var(--secondary); }
 
-        .status-light { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan); display: inline-block; margin-right: 10px; }
-
-        /* Simulator Section */
-        .simulator-section { padding: 100px 8%; display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; align-items: center; background: rgba(0,0,0,0.2); }
-        .sim-visual {
-            background: #000; border-radius: 40px; padding: 40px; border: 1px solid var(--glass-border);
-            height: 500px; position: relative; display: flex; align-items: flex-end; justify-content: space-around;
+        .tag { 
+            display: inline-block; padding: 6px 15px; background: var(--soft-blue); 
+            color: var(--secondary); border-radius: 50px; font-size: 11px; font-weight: 900; margin-top: 25px;
         }
-        .bar { width: 40px; background: linear-gradient(180deg, var(--primary), transparent); border-radius: 5px 5px 0 0; animation: barGrow 2s infinite ease-in-out alternate; }
-        @keyframes barGrow { from { height: 20%; } to { height: 80%; } }
 
-        .sim-info h2 { font-size: 3rem; font-weight: 900; margin-bottom: 30px; }
-        .sim-info p { font-size: 1.15rem; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 40px; }
+        /* 数字化图表区 */
+        .data-viz { padding: 120px 8%; background: var(--soft-blue); border-radius: 80px; margin: 0 4%; display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
+        .viz-info h2 { font-size: 3rem; color: var(--secondary); font-weight: 900; margin-bottom: 30px; line-height: 1.2; }
+        .viz-info p { color: var(--text-light); font-size: 1.15rem; margin-bottom: 40px; line-height: 1.8; }
 
-        /* Feature Detailed Grid */
-        .detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; padding: 100px 8%; }
-        .detail-item { 
-            padding: 40px; border-radius: 30px; background: rgba(255,255,255,0.02);
-            border: 1px solid var(--glass-border);
+        .chart-mockup {
+            background: #fff; padding: 40px; border-radius: 40px; border: 1px solid #E6F2FF;
+            box-shadow: 0 30px 60px rgba(0, 84, 166, 0.05); position: relative;
         }
-        .detail-item h3 { font-size: 20px; color: var(--primary); margin-bottom: 15px; }
+        .bar-wrap { display: flex; align-items: flex-end; justify-content: space-between; height: 250px; margin-top: 30px; }
+        .bar { width: 45px; background: linear-gradient(180deg, var(--primary), var(--secondary)); border-radius: 8px 8px 0 0; animation: grow 1.5s var(--ease) infinite alternate; }
+        @keyframes grow { from { height: 20%; } to { height: 90%; } }
 
-        footer { padding: 100px 8% 40px; text-align: center; border-top: 1px solid var(--glass-border); }
-        .f-logo { font-size: 24px; font-weight: 900; margin-bottom: 20px; }
+        footer { padding: 100px 8% 40px; text-align: center; border-top: 1px solid #F4F9FF; }
+        .f-logo { font-size: 24px; font-weight: 900; color: var(--secondary); margin-bottom: 20px; }
 
-        [data-aos] { opacity: 0; transform: translateY(40px); transition: 1s var(--ease-in-out); }
+        [data-aos] { opacity: 0; transform: translateY(40px); transition: 1s var(--ease); }
         [data-aos].aos-animate { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 1100px) {
+            .matrix-grid { grid-template-columns: 1fr 1fr; }
+            .data-viz { grid-template-columns: 1fr; border-radius: 0; margin: 0; }
+        }
     </style>
 </head>
 <body>
 
     <div id="fluid-cursor"></div>
-    <div class="grid-overlay"></div>
+    <div class="bg-decor"><div class="grid-line"></div></div>
 
     <nav>
         <div class="logo">DAPENG<span>大鹏科技</span></div>
         <ul style="display:flex; gap:40px; list-style:none;">
-            <li><a href="index.html" style="color:rgba(255,255,255,0.5); text-decoration:none; font-size:14px; font-weight:700;">首页</a></li>
-            <li><a href="product.html" style="color:var(--primary); text-decoration:none; font-size:14px; font-weight:700;">规格中心</a></li>
-            <li><a href="pricing.html" style="color:rgba(255,255,255,0.5); text-decoration:none; font-size:14px; font-weight:700;">解决方案</a></li>
+            <li><a href="index.html" style="color:var(--text-light); text-decoration:none; font-size:14px; font-weight:700;">数字化首页</a></li>
+            <li><a href="product.html" style="color:var(--secondary); text-decoration:none; font-size:14px; font-weight:700;">技术规格规格</a></li>
+            <li><a href="pricing.html" style="color:var(--text-light); text-decoration:none; font-size:14px; font-weight:700;">方案集成</a></li>
         </ul>
     </nav>
 
     <header class="specs-header">
-        <h1 data-aos="fade-down">工业流体数字指挥中心</h1>
-        <p data-aos="fade-up" data-aos-delay="200">消除不确定性。我们基于 SEMI G4 及 ISO 14644 标准，为您提供透明、可追溯、原子级精度的工业水处理规格参数。</p>
+        <h1 data-aos="fade-down">工业流体数字智库</h1>
+        <p data-aos="fade-up" data-aos-delay="200">消除工程黑盒。大鹏科技通过原子级规格定义与全链路数字追溯，为您的精密生产线提供可量化、可验证的绝对纯净保障。</p>
     </header>
 
-    <section class="specs-matrix">
+    <section class="matrix-grid">
         <div class="matrix-card" data-aos="fade-up">
             <h2><i class="fas fa-atom"></i> 超纯水系统 (UPW)</h2>
-            <div class="spec-row">
-                <span class="spec-label">电阻率 (Resistivity)</span>
-                <span class="spec-value">18.25 MΩ·cm</span>
-            </div>
-            <div class="spec-row">
-                <span class="spec-label">总有机碳 (TOC)</span>
-                <span class="spec-value">< 0.5 ppb</span>
-            </div>
-            <div class="spec-row">
-                <span class="spec-label">颗粒度 (>0.05μm)</span>
-                <span class="spec-value">< 0.1 ea/ml</span>
-            </div>
-            <div class="spec-row">
-                <span class="spec-label">溶解氧 (DO)</span>
-                <span class="spec-value">< 5 ppb</span>
-            </div>
-            <div style="margin-top:30px;"><span class="status-light"></span> <span style="font-size:12px; font-weight:900;">半导体 G5 级就绪</span></div>
+            <div class="spec-row"><span class="spec-label">电阻率极值</span><span class="spec-value">18.25 MΩ·cm</span></div>
+            <div class="spec-row"><span class="spec-label">TOC 指标</span><span class="spec-value">< 0.5 ppb</span></div>
+            <div class="spec-row"><span class="spec-label">颗粒度 (>0.05μm)</span><span class="spec-value">< 0.1 ea/ml</span></div>
+            <div class="spec-row"><span class="spec-label">二氧化硅 (SiO2)</span><span class="spec-value">< 1.0 ppb</span></div>
+            <span class="tag">SEMI G4 级别认证</span>
         </div>
 
         <div class="matrix-card" data-aos="fade-up" data-aos-delay="200">
             <h2><i class="fas fa-pills"></i> 医药纯化水 (PW)</h2>
-            <div class="spec-row">
-                <span class="spec-label">电导率 (Conductivity)</span>
-                <span class="spec-value">< 0.8 μS/cm</span>
-            </div>
-            <div class="spec-row">
-                <span class="spec-label">内毒素 (Endotoxin)</span>
-                <span class="spec-value">< 0.125 EU/ml</span>
-            </div>
-            <div class="spec-row">
-                <span class="spec-label">总微生物 (TVC)</span>
-                <span class="spec-value">< 5 cfu/100ml</span>
-            </div>
-            <div class="spec-row">
-                <span class="spec-label">材质标准</span>
-                <span class="spec-value">ASME BPE SS316L</span>
-            </div>
-            <div style="margin-top:30px;"><span class="status-light"></span> <span style="font-size:12px; font-weight:900;">符合 FDA/GMP 4Q 验证</span></div>
+            <div class="spec-row"><span class="spec-label">产水电导率</span><span class="spec-value">< 0.8 μS/cm</span></div>
+            <div class="spec-row"><span class="spec-label">内毒素限量</span><span class="spec-value">< 0.125 EU/ml</span></div>
+            <div class="spec-row"><span class="spec-label">总微生物 (TVC)</span><span class="spec-value">< 5 cfu/100ml</span></div>
+            <div class="spec-row"><span class="spec-label">材质追溯标准</span><span class="spec-value">ASME BPE 2022</span></div>
+            <span class="tag">符合 FDA / GMP 4Q 验证</span>
         </div>
 
         <div class="matrix-card" data-aos="fade-up" data-aos-delay="400">
             <h2><i class="fas fa-recycle"></i> 零排放系统 (ZLD)</h2>
-            <div class="spec-row">
-                <span class="spec-label">回收率 (Recovery)</span>
-                <span class="spec-value">> 98.5%</span>
-            </div>
-            <div class="spec-row">
-                <span class="spec-label">进水 TDS</span>
-                <span class="spec-value">Up to 60,000 ppm</span>
-            </div>
-            <div class="spec-row">
-                <span class="spec-label">运行能耗</span>
-                <span class="spec-value">-35% vs 传统工艺</span>
-            </div>
-            <div class="spec-row">
-                <span class="spec-label">自动化程度</span>
-                <span class="spec-value">全栈数字化集成</span>
-            </div>
-            <div style="margin-top:30px;"><span class="status-light"></span> <span style="font-size:12px; font-weight:900;">全生命周期资产优化</span></div>
+            <div class="spec-row"><span class="spec-label">系统综合回收率</span><span class="spec-value">> 98.5%</span></div>
+            <div class="spec-row"><span class="spec-label">进水 TDS 容量</span><span class="spec-value">65,000 ppm</span></div>
+            <div class="spec-row"><span class="spec-label">运行能耗优化</span><span class="spec-value">-35% vs 传统工艺</span></div>
+            <div class="spec-row"><span class="spec-label">数字化集成度</span><span class="spec-value">Full Stack i-Touch</span></div>
+            <span class="tag">全生命周期资产优化</span>
         </div>
     </section>
 
-    <section class="simulator-section">
-        <div class="sim-visual" data-aos="zoom-in">
-            <div class="bar" style="animation-delay:0s;"></div>
-            <div class="bar" style="animation-delay:0.2s;"></div>
-            <div class="bar" style="animation-delay:0.4s;"></div>
-            <div class="bar" style="animation-delay:0.6s;"></div>
-            <div class="bar" style="animation-delay:0.8s;"></div>
-            <div style="position:absolute; top:20px; left:20px; font-size:10px; font-weight:900; letter-spacing:2px; color:var(--primary);">REAL-TIME FLUCTUATION SIMULATOR</div>
-        </div>
-        <div class="sim-info" data-aos="fade-left">
-            <h2>自适应数字模拟<br>确保极限稳定性</h2>
-            <p>我们在系统设计阶段即采用计算流体力学 (CFD) 与人工智能算法对流场进行数万次模拟，预判并消除任何潜在的死水区与参数波动。这种预见性工程确保了交付后的产水指标恒定如一。</p>
+    <section class="data-viz">
+        <div class="viz-info" data-aos="fade-right">
+            <h2>基于数字孪生的<br>流体稳定性工程</h2>
+            <p>我们在设计阶段通过 1:1 数字孪生模型，对复杂工况下的水质波动、压力脉冲进行动态预演，确保实际运行中的参数偏移控制在 ±0.01% 的极窄区间内。</p>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-                <div style="padding:20px; background:rgba(255,255,255,0.05); border-radius:20px;">
-                    <div style="font-size:32px; font-weight:900; color:var(--primary);">±0.02</div>
-                    <div style="font-size:12px; opacity:0.5;">最大参数波动范围</div>
+                <div style="padding:25px; background:#fff; border-radius:25px; border:1px solid #E6F2FF;">
+                    <div style="font-size:32px; font-weight:900; color:var(--secondary);">±0.01</div>
+                    <div style="font-size:12px; color:var(--text-light);">参数控制精度</div>
                 </div>
-                <div style="padding:20px; background:rgba(255,255,255,0.05); border-radius:20px;">
-                    <div style="font-size:32px; font-weight:900; color:var(--primary);">2ms</div>
-                    <div style="font-size:12px; opacity:0.5;">传感器响应延迟</div>
+                <div style="padding:25px; background:#fff; border-radius:25px; border:1px solid #E6F2FF;">
+                    <div style="font-size:32px; font-weight:900; color:var(--secondary);">2ms</div>
+                    <div style="font-size:12px; color:var(--text-light);">系统响应时延</div>
                 </div>
             </div>
         </div>
+        <div class="chart-mockup" data-aos="zoom-in">
+            <div style="font-size:11px; font-weight:900; letter-spacing:2px; color:var(--primary);">REAL-TIME PERFORMANCE SIMULATOR</div>
+            <div class="bar-wrap">
+                <div class="bar" style="animation-delay:0s;"></div>
+                <div class="bar" style="animation-delay:0.2s;"></div>
+                <div class="bar" style="animation-delay:0.4s;"></div>
+                <div class="bar" style="animation-delay:0.6s;"></div>
+                <div class="bar" style="animation-delay:0.8s;"></div>
+                <div class="bar" style="animation-delay:1s;"></div>
+            </div>
+        </div>
     </section>
-
-    <div class="detail-grid">
-        <div class="detail-item" data-aos="fade-up">
-            <h3>核心组件追溯性</h3>
-            <p>每一个泵组、每一根膜丝均拥有唯一的数字化身份证，支持从源头生产到运行维护的全流程生命周期追踪。</p>
-        </div>
-        <div class="detail-item" data-aos="fade-up" data-aos-delay="200">
-            <h3>极端工况承受能力</h3>
-            <p>系统经过 1.5 倍额定压力脉冲测试，确保在瞬时电力中断或原水剧烈波动时，核心工艺模块免受不可逆损伤。</p>
-        </div>
-    </div>
 
     <footer>
         <div class="f-logo">DAPENG<span>大鹏科技</span></div>
-        <p style="font-size:13px; color:rgba(255,255,255,0.3);">&copy; 2026 东莞市大鹏水处理科技有限公司 | 极致流体数据指挥中心</p>
+        <p style="font-size:13px; color:var(--text-light); opacity:0.6;">&copy; 2026 东莞市大鹏水处理科技有限公司 | 工业流体数字指挥中心</p>
     </footer>
 
     <script>
@@ -232,8 +188,7 @@
 
         const cursor = document.getElementById('fluid-cursor');
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
         });
     </script>
 </body>
