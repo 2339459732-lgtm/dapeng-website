@@ -3,152 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>关于我们 - 大鹏水处理科技</title>
+    <title>品牌叙事 | 大鹏水处理科技 - 追逐极致纯净的工业旅程</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #00AEEF;
+            --primary: #00D2FF;
             --secondary: #0054A6;
-            --bg-light: #F4F9FF;
-            --white: #FFFFFF;
-            --text-main: #1A2B3C;
-            --text-dim: #5D7285;
-            --ease: cubic-bezier(0.645, 0.045, 0.355, 1);
+            --deep-sea: #001220;
+            --pure-white: #FFFFFF;
+            --soft-blue: #F0F8FF;
+            --accent-cyan: #64FFDA;
+            --text-dark: #1A2B3C;
+            --text-light: #5D7285;
+            --glass: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --shadow-fluid: 0 30px 60px rgba(0, 174, 239, 0.12);
+            --font-main: 'Noto Sans SC', sans-serif;
+            --font-eng: 'Montserrat', sans-serif;
+            --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
-        body { background: var(--bg-light); color: var(--text-main); font-family: 'Noto Sans SC', sans-serif; line-height: 1.6; overflow-x: hidden; }
-        
-        /* 导航 */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        body { background: #fff; color: var(--text-dark); font-family: var(--font-main); line-height: 1.6; overflow-x: hidden; }
+
+        #fluid-cursor {
+            position: fixed; width: 30px; height: 30px;
+            background: rgba(0, 210, 255, 0.2);
+            border: 1.5px solid var(--primary);
+            border-radius: 50% 50% 50% 5px;
+            transform: rotate(-45deg);
+            pointer-events: none; z-index: 10000;
+            transition: width 0.3s, height 0.3s, background 0.3s, border-radius 0.3s;
+        }
+        #fluid-cursor.hover { width: 60px; height: 60px; background: rgba(0, 84, 166, 0.1); border-radius: 50%; }
+
         nav { 
-            position: fixed; top: 0; width: 100%; height: 80px; 
+            position: fixed; top: 0; width: 100%; height: 90px; 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 0 6%; z-index: 2000; background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 0 6%; z-index: 2000; background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border);
         }
-        .logo { font-size: 22px; font-weight: 800; color: var(--secondary); text-decoration: none; }
+        .logo { font-weight: 900; font-size: 26px; color: var(--secondary); font-family: var(--font-eng); display: flex; align-items: center; gap: 15px; }
         .logo span { color: var(--primary); }
-        .nav-links { display: flex; gap: 30px; list-style: none; }
-        .nav-links a { font-size: 15px; color: var(--text-dim); text-decoration: none; font-weight: 500; transition: 0.3s; }
-        .nav-links a.active, .nav-links a:hover { color: var(--primary); }
+        .nav-links { display: flex; gap: 45px; list-style: none; }
+        .nav-links a { font-size: 15px; font-weight: 700; color: var(--text-light); text-decoration: none; transition: 0.4s; position: relative; }
+        .nav-links a.active, .nav-links a:hover { color: var(--secondary); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 0; height: 3px; background: var(--primary); transition: 0.4s; }
+        .nav-links a.active::after { width: 100%; }
 
-        /* 页面头部 */
-        .page-header { 
-            height: 60vh; position: relative; display: flex; 
-            align-items: center; justify-content: center; text-align: center;
-            background: linear-gradient(rgba(0, 174, 239, 0.2), rgba(255, 255, 255, 1)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover; background-position: center;
+        /* Cinematic Hero */
+        .about-hero {
+            height: 90vh; position: relative; display: flex; align-items: center; justify-content: center;
+            background: var(--deep-sea); overflow: hidden;
         }
-        .page-header h1 { font-size: 4rem; font-weight: 900; color: var(--secondary); line-height: 1; }
-        .page-header h1 span { display: block; font-size: 1.5rem; letter-spacing: 12px; color: var(--primary); text-transform: uppercase; margin-top: 25px; }
+        .hero-video-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0.4; filter: grayscale(1);
+        }
+        .hero-content { position: relative; z-index: 10; text-align: center; color: #fff; }
+        .hero-content h1 { 
+            font-size: clamp(3rem, 10vw, 7rem); font-weight: 900; letter-spacing: -2px; line-height: 1;
+            margin-bottom: 20px; text-transform: uppercase;
+        }
+        .hero-content .subtitle { 
+            font-size: 1.5rem; letter-spacing: 15px; color: var(--primary); font-weight: 300;
+            display: block; margin-top: 20px;
+        }
+        .scroll-indicator {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            color: #fff; font-size: 24px; animation: bounce 2s infinite;
+        }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); } 40% { transform: translateY(-10px) translateX(-50%); } 60% { transform: translateY(-5px) translateX(-50%); } }
 
-        /* 品牌故事 */
-        .section { padding: 120px 10%; }
-        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 150px; }
-        .story-text h2 { font-size: 2.8rem; color: var(--secondary); margin-bottom: 30px; font-weight: 800; }
-        .story-text p { font-size: 1.15rem; color: var(--text-dim); margin-bottom: 25px; font-weight: 300; }
-        .story-visual { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.05); }
-        .story-visual img { width: 100%; height: 450px; object-fit: cover; }
+        /* Split Narrative Section */
+        .narrative-section { padding: 160px 0; background: #fff; }
+        .narrative-row { display: flex; align-items: center; margin-bottom: 120px; }
+        .narrative-row:nth-child(even) { flex-direction: row-reverse; }
+        
+        .narrative-img { width: 55%; position: relative; overflow: hidden; }
+        .narrative-img img { width: 100%; display: block; filter: saturate(0.8); transition: 1.5s; }
+        .narrative-row:hover .narrative-img img { transform: scale(1.05) rotate(1deg); filter: saturate(1.1); }
+        
+        .narrative-text { width: 45%; padding: 0 8%; }
+        .narrative-text h2 { font-size: 3rem; color: var(--secondary); margin-bottom: 35px; line-height: 1.2; font-weight: 900; }
+        .narrative-text p { font-size: 1.25rem; color: var(--text-light); font-weight: 300; margin-bottom: 30px; line-height: 1.8; }
 
-        /* 核心优势 */
-        .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 50px; }
-        .v-card { padding: 60px 40px; background: var(--white); border-radius: 24px; text-align: center; transition: 0.5s; box-shadow: 0 10px 40px rgba(0,0,0,0.03); border: 1px solid #F1F5F9; }
-        .v-card:hover { transform: translateY(-15px); box-shadow: 0 20px 50px rgba(0, 174, 239, 0.1); border-color: var(--primary); }
-        .v-card i { font-size: 45px; color: var(--primary); margin-bottom: 30px; }
-        .v-card h3 { font-size: 22px; color: var(--secondary); margin-bottom: 20px; }
-        .v-card p { color: var(--text-dim); font-size: 15px; }
+        /* Timeline Section */
+        .timeline-section { padding: 140px 10%; background: var(--soft-blue); position: relative; }
+        .timeline-header { text-align: center; margin-bottom: 100px; }
+        .timeline-header h2 { font-size: 3.5rem; color: var(--secondary); font-weight: 900; }
+        
+        .timeline-container { position: relative; max-width: 1000px; margin: 0 auto; }
+        .timeline-line { position: absolute; left: 50%; transform: translateX(-50%); width: 2px; height: 100%; background: rgba(0, 84, 166, 0.1); }
+        
+        .timeline-item { width: 100%; margin-bottom: 80px; position: relative; display: flex; justify-content: flex-end; padding-right: 55%; }
+        .timeline-item:nth-child(even) { justify-content: flex-start; padding-right: 0; padding-left: 55%; }
+        
+        .timeline-dot { 
+            position: absolute; left: 50%; transform: translateX(-50%); top: 0;
+            width: 20px; height: 20px; background: var(--primary); border: 4px solid #fff; border-radius: 50%;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4); z-index: 10;
+        }
+        
+        .timeline-content {
+            background: #fff; padding: 40px; border-radius: 30px; border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-fluid); transition: 0.5s;
+        }
+        .timeline-content:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .timeline-content h3 { color: var(--secondary); font-size: 24px; margin-bottom: 15px; font-weight: 800; }
+        .timeline-content .year { font-family: var(--font-eng); font-weight: 900; font-size: 40px; color: rgba(0, 210, 255, 0.15); position: absolute; top: -20px; right: 20px; }
 
-        footer { padding: 80px 10% 40px; background: #fff; border-top: 1px solid #E1E9F0; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 60px; }
-        .footer-grid h4 { color: var(--secondary); margin-bottom: 25px; }
-        .footer-grid p, .footer-grid a { color: var(--text-dim); font-size: 14px; text-decoration: none; line-height: 2; }
+        /* Values Grid */
+        .values-section { padding: 160px 10%; background: #fff; text-align: center; }
+        .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; margin-top: 80px; }
+        .value-card {
+            padding: 80px 40px; border-radius: 40px; background: #fff; border: 1px solid #F1F5F9;
+            transition: 0.6s var(--ease-in-out); position: relative; overflow: hidden;
+        }
+        .value-card:hover { transform: translateY(-20px); box-shadow: 0 40px 80px rgba(0, 84, 166, 0.1); border-color: var(--primary); }
+        .value-card i { font-size: 60px; color: var(--primary); margin-bottom: 40px; display: block; transition: 0.4s; }
+        .value-card h3 { font-size: 26px; color: var(--secondary); margin-bottom: 20px; font-weight: 800; }
+        .value-card p { color: var(--text-light); font-size: 16px; font-weight: 300; }
+        .value-card:hover i { transform: scale(1.1) rotate(5deg); color: var(--secondary); }
 
-        /* AOS */
-        [data-aos] { opacity: 0; transform: translateY(30px); transition: 1s var(--ease); }
+        footer { padding: 120px 10% 50px; background: var(--soft-blue); border-top: 1px solid #E2E8F0; }
+        .footer-main { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 80px; }
+        .f-logo { font-size: 28px; font-weight: 900; color: var(--secondary); margin-bottom: 30px; }
+        .f-logo span { color: var(--primary); }
+        .footer-main h4 { font-size: 16px; color: var(--secondary); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        .footer-main a, .footer-main p { color: var(--text-light); font-size: 14px; text-decoration: none; display: block; margin-bottom: 18px; transition: 0.3s; }
+
+        [data-aos] { opacity: 0; transform: translateY(50px); transition: 1.2s var(--ease-in-out); }
         [data-aos].aos-animate { opacity: 1; transform: translateY(0); }
 
-        @media (max-width: 992px) {
-            .story-grid { grid-template-columns: 1fr; }
+        @media (max-width: 1100px) {
+            .narrative-row { flex-direction: column !important; }
+            .narrative-img, .narrative-text { width: 100%; }
+            .narrative-text { padding: 80px 10%; text-align: center; }
             .values-grid { grid-template-columns: 1fr; }
+            .timeline-item { padding: 0 !important; justify-content: center !important; }
+            .timeline-line, .timeline-dot { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <div id="fluid-cursor"></div>
+
     <nav>
-        <a href="index.html" class="logo">大鹏<span>水处理</span></a>
+        <div class="logo">DAPENG<span>大鹏科技</span></div>
         <ul class="nav-links">
-            <li><a href="index.html">首页</a></li>
-            <li><a href="pricing.html">方案中心</a></li>
+            <li><a href="index.html">数字化首页</a></li>
+            <li><a href="pricing.html">集成方案</a></li>
             <li><a href="product.html">技术规格</a></li>
-            <li><a href="about.html" class="active">关于我们</a></li>
+            <li><a href="about.html" class="active">品牌故事</a></li>
         </ul>
-        <a href="tel:18681043142" class="btn" style="padding:10px 25px; border:1px solid var(--primary); border-radius:50px; color:var(--primary); text-decoration:none; font-size:14px; font-weight:600;">即刻咨询</a>
+        <a href="tel:18681043142" class="btn-glass" style="padding:12px 30px; background:var(--secondary); color:#fff; border-radius:50px; text-decoration:none; font-weight:800; font-size:14px;">即刻咨询专家</a>
     </nav>
 
-    <header class="page-header">
-        <h1 data-aos="zoom-out">追逐 <span>极致纯净</span></h1>
+    <header class="about-hero">
+        <img src="https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=1920&q=80" class="hero-video-bg" alt="水之美学">
+        <div class="hero-content">
+            <h1 data-aos="zoom-out">追逐<span>极致纯净</span></h1>
+            <span class="subtitle" data-aos="fade-up" data-aos-delay="400">PURSUE THE ULTIMATE PURITY</span>
+        </div>
+        <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
     </header>
 
-    <section class="section">
-        <div class="story-grid">
-            <div class="story-text" data-aos="fade-right">
-                <h2>纯粹之美的工业实践。</h2>
-                <p>东莞市大鹏水处理科技有限公司，源于对工业用水“零容忍”的极致执着。在微米与 ppb 的维度上，我们重新定义了纯净的深度。</p>
-                <p>十五年来，我们深耕半导体与生物医药领域，将先进的膜分离技术与 AI 智能运维深度耦合，为超过 500 家高精尖企业提供全天候的水处理保障。</p>
+    <section class="narrative-section">
+        <div class="narrative-row">
+            <div class="narrative-img" data-aos="fade-right">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80" alt="大鹏制造">
             </div>
-            <div class="story-visual" data-aos="fade-left">
-                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1000&q=80" alt="大鹏科技生产车间">
+            <div class="narrative-text" data-aos="fade-left">
+                <h2>生于执着<br>成于精密</h2>
+                <p>东莞市大鹏水处理科技有限公司的诞生，源于一个简单的信条：在工业流体的微观世界里，没有任何杂质应该被容忍。</p>
+                <p>我们不只是设备的组装者，更是流体物理与化学边界的探索者。通过将分子级的分离技术与工业物联网深度融合，我们重新定义了“工业纯净”的行业标准。</p>
             </div>
         </div>
 
+        <div class="narrative-row">
+            <div class="narrative-img" data-aos="fade-left">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="智慧监控">
+            </div>
+            <div class="narrative-text" data-aos="fade-right">
+                <h2>数字化引擎<br>驱动未来水处理</h2>
+                <p>在半导体与制药等对水质极其敏感的行业，稳定性就是生命线。大鹏科技自研的 i-Touch 数字化管理系统，实现了从进水到产水的全链路参数秒级监控。</p>
+                <p>这种从“经验运维”到“数字预警”的跨越，确保了我们的客户能够专注于核心制程，而将最复杂的流体管理交给我们。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <div class="timeline-header" data-aos="fade-up">
+            <h2>品牌进化历程</h2>
+        </div>
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="year">2010</span>
+                    <h3>品牌启航</h3>
+                    <p>成立于东莞，专注于精密电子行业基础工业用水处理系统的研发与工程交付。</p>
+                </div>
+            </div>
+
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="year">2015</span>
+                    <h3>技术突围</h3>
+                    <p>成功研发双级反渗透+EDI集成系统，进入半导体超纯水市场，打破国外品牌垄断。</p>
+                </div>
+            </div>
+
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="year">2020</span>
+                    <h3>智慧集成</h3>
+                    <p>i-Touch 数字化运维系统 1.0 上线，实现首个大型工业 ZLD 零排放项目交付。</p>
+                </div>
+            </div>
+
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="year">2026</span>
+                    <h3>领航未来</h3>
+                    <p>定义“流体数字集成”新范式，为全球高精尖产业提供全生命周期水资产管理。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="values-section">
+        <div data-aos="fade-up">
+            <h2 style="font-size:3.5rem; color:var(--secondary); font-weight:900;">大鹏核心价值观</h2>
+            <p style="color:var(--text-light); max-width:800px; margin:25px auto; font-size:1.2rem;">我们以这三大支柱，构建起客户对大鹏品牌的深度信任。</p>
+        </div>
         <div class="values-grid">
-            <div class="v-card" data-aos="fade-up">
-                <i class="fas fa-microscope"></i>
-                <h3>精密标准 (PRECISION)</h3>
-                <p>每一项参数的极致精准，是我们对客户最庄严的承诺。</p>
+            <div class="value-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-bullseye"></i>
+                <h3>极致精准</h3>
+                <p>不仅是 18.25MΩ·cm，更是对每一个传感器数值、每一个焊点细节的“像素级”执着。</p>
             </div>
-            <div class="v-card" data-aos="fade-up" data-aos-delay="200">
-                <i class="fas fa-leaf"></i>
-                <h3>生态共生 (ECOLOGY)</h3>
-                <p>资源化利用每一滴废水，实现工业制造与自然的和谐平衡。</p>
+            <div class="value-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-shield-alt"></i>
+                <h3>零停机保障</h3>
+                <p>通过冗余设计与预测性维护，确保您的生产线拥有永不间断、品质恒定的流体支撑。</p>
             </div>
-            <div class="v-card" data-aos="fade-up" data-aos-delay="400">
-                <i class="fas fa-infinity"></i>
-                <h3>长期服务</h3>
-                <p>超越系统交付，提供覆盖全生命周期的智慧运维与全方位支持。</p>
+            <div class="value-card" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-seedling"></i>
+                <h3>可持续共生</h3>
+                <p>用更低的能耗、更高的回收率，助力企业实现环保合规与经济效益的完美平衡。</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-grid">
+        <div class="footer-main">
             <div>
-                <h4 style="color:var(--secondary)">大鹏科技</h4>
-                <p>智造纯净，定义工业级水处理新标准。</p>
+                <div class="f-logo">DAPENG<span>大鹏科技</span></div>
+                <p>作为东莞本土领先的高端工业水处理数字化集成专家，我们致力于为中国高精尖制造提供稳固、纯净、智慧的流体动力。</p>
             </div>
             <div>
-                <h4>探索</h4>
-                <a href="index.html">返回首页</a>
+                <h4>快速链接</h4>
+                <a href="index.html">数字化首页</a>
                 <a href="pricing.html">方案中心</a>
                 <a href="product.html">技术规格</a>
-                <a href="about.html">关于我们</a>
+                <a href="about.html">品牌故事</a>
             </div>
             <div>
-                <h4>社交媒体</h4>
-                <a href="#">微信公众号</a>
-                <a href="#">领英 LinkedIn</a>
+                <h4>技术支持</h4>
+                <a href="#">全天候运维</a>
+                <a href="#">4Q 验证咨询</a>
+                <a href="#">远程数字诊断</a>
             </div>
             <div>
-                <h4>联系</h4>
-                <p>📞 186-8104-3142</p>
-                <p>📍 广东省东莞市石碣镇</p>
+                <h4>联系我们</h4>
+                <p><i class="fas fa-phone-alt"></i> 186-8104-3142</p>
+                <p><i class="fas fa-map-marker-alt"></i> 广东省东莞市石碣镇</p>
             </div>
+        </div>
+        <div style="text-align: center; padding-top: 60px; border-top: 1px solid #E2E8F0; font-size: 13px; color: var(--text-light);">
+            &copy; 2026 东莞市大鹏水处理科技有限公司 | 追逐极致纯净
         </div>
     </footer>
 
     <script>
+        const cursor = document.getElementById('fluid-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        document.querySelectorAll('a, button, .value-card, .timeline-content').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('aos-animate'); });
         }, { threshold: 0.1 });
