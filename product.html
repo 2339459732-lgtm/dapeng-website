@@ -33,9 +33,11 @@
         }
 
         #fluid-cursor {
-            position: fixed; width: 25px; height: 25px; border: 1px solid var(--primary);
-            border-radius: 50%; pointer-events: none; z-index: 10000; transition: 0.1s;
-            transform: translate(-50%, -50%); background: rgba(0, 210, 255, 0.1);
+            position: fixed; top: 0; left: 0; width: 25px; height: 25px; border: 1px solid var(--primary);
+            border-radius: 50%; pointer-events: none; z-index: 10000; 
+            transition: width 0.3s, height 0.3s, background 0.3s;
+            will-change: transform; margin-top: -12.5px; margin-left: -12.5px;
+            background: rgba(0, 210, 255, 0.1);
         }
 
         nav { 
@@ -187,9 +189,19 @@
         document.querySelectorAll('[data-aos]').forEach(el => observer.observe(el));
 
         const cursor = document.getElementById('fluid-cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
         document.addEventListener('mousemove', (e) => {
-            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
+        const animateCursor = () => {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+            requestAnimationFrame(animateCursor);
+        };
+        animateCursor();
     </script>
 </body>
 </html>

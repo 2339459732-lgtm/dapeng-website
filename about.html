@@ -28,13 +28,13 @@
         body { background: #fff; color: var(--text-dark); font-family: var(--font-main); line-height: 1.6; overflow-x: hidden; }
 
         #fluid-cursor {
-            position: fixed; width: 30px; height: 30px;
+            position: fixed; top: 0; left: 0; width: 30px; height: 30px;
             background: rgba(0, 210, 255, 0.2);
             border: 1.5px solid var(--primary);
             border-radius: 50% 50% 50% 5px;
-            transform: rotate(-45deg);
             pointer-events: none; z-index: 10000;
             transition: width 0.3s, height 0.3s, background 0.3s, border-radius 0.3s;
+            will-change: transform; margin-top: -15px; margin-left: -15px;
         }
         #fluid-cursor.hover { width: 60px; height: 60px; background: rgba(0, 84, 166, 0.1); border-radius: 50%; }
 
@@ -296,10 +296,15 @@
 
     <script>
         const cursor = document.getElementById('fluid-cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+        const animateCursor = () => {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) rotate(-45deg)`;
+            requestAnimationFrame(animateCursor);
+        };
+        animateCursor();
         document.querySelectorAll('a, button, .value-card, .timeline-content').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));

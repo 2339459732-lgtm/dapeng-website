@@ -48,13 +48,18 @@
 
         /* 修复的光标交互 */
         #fluid-cursor {
-            position: fixed; width: 30px; height: 30px;
+            position: fixed; top: 0; left: 0; width: 30px; height: 30px;
             background: rgba(0, 210, 255, 0.15); border: 1.5px solid var(--primary);
             border-radius: 50%; pointer-events: none; z-index: 10000;
-            transition: transform 0.15s ease-out, width 0.3s, height 0.3s, background 0.3s;
-            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s;
+            will-change: transform;
+            margin-top: -15px; margin-left: -15px;
         }
-        #fluid-cursor.hover { width: 60px; height: 60px; background: rgba(0, 84, 166, 0.08); border-color: var(--secondary); }
+        #fluid-cursor.hover { 
+            width: 60px; height: 60px; 
+            margin-top: -30px; margin-left: -30px;
+            background: rgba(0, 84, 166, 0.08); border-color: var(--secondary); 
+        }
 
         nav { 
             position: fixed; top: 0; width: 100%; height: 100px; 
@@ -347,9 +352,21 @@
         requestAnimationFrame(raf);
 
         const cursor = document.getElementById('fluid-cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
         document.addEventListener('mousemove', (e) => {
-            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
+
+        const animateCursor = () => {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+            requestAnimationFrame(animateCursor);
+        };
+        animateCursor();
 
         document.querySelectorAll('a, button, .bento-box').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
