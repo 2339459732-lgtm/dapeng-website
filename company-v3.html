@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>东莞市大鹏水处理 | 工业水处理全产业链服务商</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    
+    <style>
+        :root {
+            --brand-color: #0046ad;
+            --accent-color: #00d2ff;
+            --bg-dark: #0a0e14;
+            --text-main: #2d3436;
+            --text-light: #636e72;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #fff;
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 90px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 6%;
+            z-index: 2000;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        nav.scrolled {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            letter-spacing: 1px;
+        }
+        nav.scrolled .logo { color: var(--brand-color); }
+        .logo span { color: var(--accent-color); margin-left: 5px; }
+
+        .nav-menu { display: flex; list-style: none; }
+        .nav-menu li { margin-left: 45px; }
+        .nav-menu a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.8);
+            font-size: 15px;
+            font-weight: 400;
+            transition: var(--transition);
+            position: relative;
+        }
+        nav.scrolled .nav-menu a { color: var(--text-main); }
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: var(--transition);
+        }
+        .nav-menu a:hover::after { width: 100%; }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(10,14,20,0.8) 0%, rgba(0,70,173,0.4) 100%),
+                        url('https://images.unsplash.com/photo-1584467735815-f778f274e296?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content { max-width: 900px; z-index: 10; }
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            letter-spacing: 2px;
+        }
+
+        .cta-group { display: flex; justify-content: center; gap: 20px; }
+        .btn-main {
+            padding: 18px 45px;
+            background: var(--accent-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(0,210,255,0.3);
+        }
+        .btn-main:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,210,255,0.5); }
+
+        .stats-bar {
+            background: #fff;
+            padding: 60px 10%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: -80px;
+            z-index: 100;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .stat-item { text-align: center; }
+        .stat-item h3 { font-size: 2.5rem; color: var(--brand-color); font-family: 'Montserrat'; }
+        .stat-item p { font-size: 0.9rem; color: var(--text-light); }
+
+        .section-header { text-align: center; padding: 100px 10% 60px; }
+        .section-header span { color: var(--accent-color); font-weight: 700; text-transform: uppercase; letter-spacing: 3px; }
+        .section-header h2 { font-size: 2.5rem; margin-top: 10px; color: var(--brand-color); }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            padding: 0 10% 100px;
+        }
+
+        .detail-card {
+            background: #fdfdfd;
+            border: 1px solid #eee;
+            padding: 50px 40px;
+            border-radius: 5px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 0;
+            background: var(--brand-color);
+            transition: var(--transition);
+        }
+        .detail-card:hover { transform: translateY(-10px); background: #fff; box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
+        .detail-card:hover::before { height: 100%; }
+        
+        .detail-card i { font-size: 40px; color: var(--accent-color); margin-bottom: 25px; }
+        .detail-card h4 { font-size: 1.4rem; margin-bottom: 15px; }
+        .detail-card ul { list-style: none; color: var(--text-light); font-size: 0.95rem; }
+        .detail-card ul li { margin-bottom: 8px; display: flex; align-items: center; }
+        .detail-card ul li::before { content: '•'; color: var(--accent-color); margin-right: 8px; font-weight: bold; }
+
+        .tech-showcase {
+            background: var(--bg-dark);
+            color: #fff;
+            padding: 100px 10%;
+            display: flex;
+            align-items: center;
+            gap: 80px;
+        }
+        .tech-img { flex: 1; position: relative; }
+        .tech-img img { width: 100%; border-radius: 10px; filter: grayscale(20%); }
+        .tech-content { flex: 1; }
+        .tech-tag { background: var(--brand-color); padding: 5px 15px; border-radius: 20px; font-size: 12px; }
+
+        footer {
+            background: #0a0e14;
+            color: rgba(255,255,255,0.7);
+            padding: 80px 10% 30px;
+        }
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        .footer-logo h2 { color: #fff; margin-bottom: 20px; }
+        .footer-links h4 { color: #fff; margin-bottom: 25px; position: relative; }
+        .footer-links h4::after { content: ''; position: absolute; left: 0; bottom: -10px; width: 30px; height: 2px; background: var(--accent-color); }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 15px; }
+        .footer-links a { color: inherit; text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--accent-color); padding-left: 5px; }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .mobile-toggle { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
+
+        @media (max-width: 1024px) {
+            .detail-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); margin-top: 0; }
+            .tech-showcase { flex-direction: column; }
+        }
+        @media (max-width: 768px) {
+            .nav-menu { display: none; position: fixed; top: 0; right: -280px; width: 260px; height: 100vh; background: #fff; flex-direction: column; padding: 100px 30px; gap: 30px; box-shadow: -5px 0 30px rgba(0,0,0,0.2); transition: right 0.4s; }
+            .nav-menu.open { right: 0; }
+            .nav-menu a { color: var(--text-main); }
+            .mobile-toggle { display: block; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .footer-main { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="logo">DAPENG<span>WATER</span></div>
+        <button class="mobile-toggle" id="menuToggle" aria-label="菜单"><i class="fas fa-bars"></i></button>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="#">首页</a></li>
+            <li><a href="#solutions">系统解决方案</a></li>
+            <li><a href="#tech">技术研发</a></li>
+            <li><a href="#cases">工程案例</a></li>
+            <li><a href="#contact">联系我们</a></li>
+        </ul>
+        <div class="contact-btn">
+            <a href="tel:0769" class="btn-main" style="padding: 10px 25px; font-size: 14px;">立即咨询</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content" data-aos="fade-up">
+            <p>LEADERS IN WATER TREATMENT</p>
+            <h1>重塑工业水循环<br><span style="color:var(--accent-color)">智慧净水方案</span></h1>
+            <p>东莞市大鹏水处理设备有限公司：十五年深耕工业水处理领域，提供从研发、设计到运维的全生命周期服务。</p>
+            <div class="cta-group">
+                <a href="#solutions" class="btn-main">探索解决方案</a>
+                <a href="#" class="btn-main" style="background: transparent; border: 1px solid #fff;">关于我们</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-bar" data-aos="zoom-in-up">
+        <div class="stat-item"><h3>15+</h3><p>行业深耕年限</p></div>
+        <div class="stat-item"><h3>500+</h3><p>大型工程案例</p></div>
+        <div class="stat-item"><h3>99%</h3><p>系统运行稳定性</p></div>
+        <div class="stat-item"><h3>24h</h3><p>售后响应机制</p></div>
+    </section>
+
+    <section class="section-header" id="solutions">
+        <span data-aos="fade-up">SOLUTIONS</span>
+        <h2 data-aos="fade-up" data-aos-delay="100">核心系统解决方案</h2>
+    </section>
+
+    <div class="detail-grid">
+        <div class="detail-card" data-aos="fade-up">
+            <i class="fas fa-vial"></i>
+            <h4>超纯水/高纯水系统</h4>
+            <ul>
+                <li>双级反渗透(RO)技术</li>
+                <li>EDI电去离子精密处理</li>
+                <li>电阻率可达18.2MΩ·cm</li>
+                <li>适用于半导体、实验室、医药</li>
+            </ul>
+        </div>
+        <div class="detail-card" data-aos="fade-up" data-aos-delay="100">
+            <i class="fas fa-sync-alt"></i>
+            <h4>中水回用/零排放</h4>
+            <ul>
+                <li>MBR膜生物反应器</li>
+                <li>UF/NF深度处理工艺</li>
+                <li>工业废水减排率达90%</li>
+                <li>满足严苛环保排放标准</li>
+            </ul>
+        </div>
+        <div class="detail-card" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-faucet-drip"></i>
+            <h4>锅炉/冷却循环水</h4>
+            <ul>
+                <li>全自动离子交换技术</li>
+                <li>高效除垢控盐工艺</li>
+                <li>大幅提升热交换效率</li>
+                <li>延长工业设备使用寿命</li>
+            </ul>
+        </div>
+    </div>
+
+    <section class="tech-showcase" id="tech">
+        <div class="tech-img" data-aos="fade-right">
+            <img src="https://images.unsplash.com/photo-1574689049868-e94ed5301745?auto=format&fit=crop&w=800&q=80" alt="大鹏水处理技术">
+        </div>
+        <div class="tech-content" data-aos="fade-left">
+            <span class="tech-tag">TECHNOLOGY</span>
+            <h2 style="font-size: 2.2rem; margin: 20px 0;">以科技驱动水质升华</h2>
+            <p style="color: #bdc3c7; margin-bottom: 30px;">
+                我们不仅仅制造设备，更在不断探索膜技术与智能化控制的深度结合。通过大鹏云端智能监控系统，客户可实时掌握水质动态。
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h5 style="color: var(--accent-color);">核心专利</h5>
+                    <p style="font-size: 14px; color: #95a5a6;">拥多项自主研发的工业水处理控制软件著作权。</p>
+                </div>
+                <div>
+                    <h5 style="color: var(--accent-color);">进口耗材</h5>
+                    <p style="font-size: 14px; color: #95a5a6;">与陶氏、海德能等国际知名品牌建立长期战略合作。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-main">
+            <div class="footer-logo">
+                <h2>大鹏水处理</h2>
+                <p>专业的工业水处理整体解决方案提供商。总部位于东莞，服务辐射全球。</p>
+                <div style="margin-top: 25px; font-size: 20px;">
+                    <i class="fab fa-weixin" style="margin-right: 15px;"></i>
+                    <i class="fab fa-linkedin"></i>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>快捷导航</h4>
+                <ul>
+                    <li><a href="#">产品中心</a></li>
+                    <li><a href="#">技术文档</a></li>
+                    <li><a href="#">工程图集</a></li>
+                    <li><a href="#">荣誉资质</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>业务范围</h4>
+                <ul>
+                    <li><a href="#">电子级超纯水</a></li>
+                    <li><a href="#">印染废水处理</a></li>
+                    <li><a href="#">海水淡化工程</a></li>
+                    <li><a href="#">水质在线监测</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>联系我们</h4>
+                <p><i class="fas fa-map-marker-alt" style="color:var(--accent-color);margin-right:10px;"></i>广东省东莞市大鹏水处理科技园</p>
+                <p><i class="fas fa-phone-alt" style="color:var(--accent-color);margin-right:10px;"></i>0769-8888-8888</p>
+                <p><i class="fas fa-envelope" style="color:var(--accent-color);margin-right:10px;"></i>info@dapengwater.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 东莞市大鹏水处理有限公司 版权所有</div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+    AOS.init({ duration: 800, once: true });
+    window.addEventListener('scroll', function() {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+    document.getElementById('menuToggle').addEventListener('click', function() {
+        document.getElementById('navMenu').classList.toggle('open');
+    });
+    document.querySelectorAll('.nav-menu a').forEach(function(a) {
+        a.addEventListener('click', function() {
+            document.getElementById('navMenu').classList.remove('open');
+        });
+    });
+    </script>
+</body>
+</html>
